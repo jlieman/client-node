@@ -20,7 +20,13 @@
     "type": "git",
     "url": "git+https://github.com/smart-on-fhir/client-node.git"
   },
-  "keywords": ["smart", "fhir", "health", "hl7", "client"],
+  "keywords": [
+    "smart",
+    "fhir",
+    "health",
+    "hl7",
+    "client"
+  ],
   "author": "Vladimir Ignatov <vlad.ignatov@gmail.com>",
   "license": "APACHE2",
   "bugs": {
