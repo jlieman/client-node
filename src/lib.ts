@@ -335,7 +335,7 @@ export async function completeAuth(req: IncomingMessage, storage: SMART.Storage)
         .then(async ({ data }) => {
             debug(`Received tokenResponse. Saving it to the state...`);
             cached.tokenResponse = data;
-            return storage.set(state as string, cached);
+            return storage.unset(state as string);
         })
         .then(() => new Client(cached))
         .catch(result => {
