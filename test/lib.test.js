@@ -123,47 +123,6 @@ describe("lib", () => {
         });
     });
 
-    describe("resolveUrl", () => {
-        it ("works as expected", () => {
-            let req = {
-                connection: {
-                    encrypted: true
-                },
-                headers: {
-                    host: "localhost"
-                }
-            };
-
-            expect(lib.resolveUrl(req, "")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "/")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "./")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "../")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "..")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "../..")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "../../")).to.equal("https://localhost/")
-            expect(lib.resolveUrl(req, "../../a")).to.equal("https://localhost/a")
-            expect(lib.resolveUrl(req, "../../b")).to.equal("https://localhost/b")
-            expect(lib.resolveUrl(req, "b")).to.equal("https://localhost/b")
-            expect(lib.resolveUrl(req, "/b")).to.equal("https://localhost/b")
-            expect(lib.resolveUrl(req, "/a/b")).to.equal("https://localhost/a/b")
-
-            req.connection.encrypted = false
-
-            expect(lib.resolveUrl(req, "")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "/")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "./")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "../")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "..")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "../..")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "../../")).to.equal("http://localhost/")
-            expect(lib.resolveUrl(req, "../../a")).to.equal("http://localhost/a")
-            expect(lib.resolveUrl(req, "../../b")).to.equal("http://localhost/b")
-            expect(lib.resolveUrl(req, "b")).to.equal("http://localhost/b")
-            expect(lib.resolveUrl(req, "/b")).to.equal("http://localhost/b")
-            expect(lib.resolveUrl(req, "/a/b")).to.equal("http://localhost/a/b")
-        })
-    });
-
     describe("buildAuthorizeUrl", () => {
         it ("Rejects if no serverUrl can be found", () => {
             const req = { url: "" };

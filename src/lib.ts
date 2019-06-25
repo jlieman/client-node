@@ -107,16 +107,6 @@ export async function getSecurityExtensions(baseUrl: string): Promise<SMART.OAut
 }
 
 /**
- * Converts the given relative URL to absolute based on the request origin
- * @param req The http request object
- * @param url The url to convert
- */
-export function resolveUrl(req: IncomingMessage, url: string): string {
-    const protocol = (req.connection as IObjectLiteral).encrypted ? "https" : "http";
-    return Url.resolve(protocol + "://" + req.headers.host, url);
-}
-
-/**
  * Given a fhir bundle finds it's link having the given rel attribute.
  * @param {Object} bundle FHIR JSON Bundle object
  * @param {String} rel The rel attribute to look for: prev|next|self... (see
@@ -161,7 +151,7 @@ export async function buildAuthorizeUrl(req: IncomingMessage, options: SMART.Cli
     const state: SMART.ClientState = {
         serverUrl  : serverUrl as string,
         clientId   : options.clientId,
-        redirectUri: resolveUrl(req, options.redirectUri),
+        redirectUri: options.redirectUri || "",
         scope      : options.scope || "",
         ...extensions
     };
