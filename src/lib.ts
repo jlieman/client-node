@@ -161,18 +161,9 @@ export async function buildAuthorizeUrl(req: IncomingMessage, options: SMART.Cli
         state.clientSecret = options.clientSecret;
     }
 
-    // Create an unique key. We could use the session ID for that but we
-    // don't want it to be visible in the browser URL bar (as the state
-    // parameter) while redirecting.
     const id = "smart-" + Crypto.randomBytes(8).toString("hex");
-    const oldId = await storage.get("smartId");
-    if (oldId) {
-        debug(`Deleting previous state by id ("${oldId}")`);
-        await storage.unset(oldId);
-    }
     debug(`Saving new state by id ("${id}")`);
     await storage.set(id, state);
-    await storage.set("smartId", id);
 
     let redirectUrl = state.redirectUri;
 
