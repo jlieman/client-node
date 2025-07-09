@@ -334,4 +334,40 @@ export default class Client
             return result;
         });
     }
+
+    public getTokenField(field: string): string | null
+    {
+        const tokenResponse = this.state.tokenResponse;
+        if (tokenResponse) {
+            // We have been authorized against this server but we don't know
+            // the requested field. This could be a scope or configuration issue.
+            if (!tokenResponse[field]) {
+                // The server should have returned the field!
+                debug(
+                    `The field ${field} is not available in the token response. ` +
+                    "Please check if your server supports that."
+                );
+                return null;
+            }
+            return tokenResponse[field];
+        }
+
+        if (this.state.authorizeUri) {
+            debug(
+                `You are trying to get the field ${field} ` +
+                "but your app is not authorized yet."
+            );
+        }
+        else {
+            debug(
+                `You are trying to get the field ${field} ` +
+                "but your app needs to be authorized first."
+            );
+        }
+        return null;
+    }
+
+    public getToken(): SMART.TokenResponse | undefined {
+        return this.state.tokenResponse;
+    }
 }
